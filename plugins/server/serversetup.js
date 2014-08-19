@@ -1,4 +1,5 @@
 // This file sets up the server, the sockets, etc
+'use strict';
 
 var connect = require('connect')
   , express = require('express')

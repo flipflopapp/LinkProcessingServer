@@ -1,9 +1,11 @@
+'use strict';
 
 var ratelimiter = require('ffratelimiter')
   , Scraper = require('scrapify')
   ;
 
 var Scraper = function() {
+    console.log("Setup Scraper module.");
     var me = this;
     var params = {
         limit: 10,
@@ -43,3 +45,4 @@ var Scraper = function() {
     };
 
 }).call(Scraper.prototype);
+module.exports = Scraper;

@@ -1,6 +1,4 @@
-var User = require('./user')
-  , check = require('validator').check
-  ;
+'use strict';
 
 var Server = function() {
 };

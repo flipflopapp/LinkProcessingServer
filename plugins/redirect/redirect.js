@@ -4,6 +4,7 @@ var http = require('http')
   ;
 
 var Redirect = function(){
+    console.log("Setup Redirect module");
     var me = this;
     var params = {
         limit: 10,
@@ -57,4 +58,5 @@ var Redirect = function(){
         });
     };
 
-}
+}).call(Redirect.prototype);
+module.exports = Redirect;
