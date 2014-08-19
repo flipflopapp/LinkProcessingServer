@@ -1,7 +1,7 @@
 'use strict';
 
 var ratelimiter = require('ffratelimiter')
-  , Scraper = require('scrapify')
+  , MetaInspector = require('node-metainspector')
   ;
 
 module.exports = function(options, imports, register){
@@ -27,29 +27,36 @@ var Scraper = function() {
 (function() {
 
     this.getStructuredData = function(url, callback){
+        var me = this;
         var params = [ url ];
-        this.que.callWrapper(me._getStructuredData, params, callback, this);
+        me.que.callWrapper(me._getStructuredData, params, callback, me);
     };
 
     this._getStructuredData = function(url, callback) {
-        var scraper = new Scraper();
+        var me = this;
+        var client = new MetaInspector(url, {});
         var data = {
-            links: []
+            internal_links: [],
+            external_links: []
         };
-        var hostname = url.hostname;
-        scraper.pageHandler = function(url, $){
-            var urls = $('a').each(function(){
-                var _url = this.href;
-                if (_url[0] == '/') {
-                    _url = hostname + _url;
+        client.on('fetch', function(){
+            var links = client.links();
+            links.forEach(function(link){
+                if (link[0] == '/'){
+                    link = client.host + '/' + link;
+                    data.internal_links.push(link);
+                } else if (link[0] == '#') {
+                    // skip - in page link
+                } else {
+                    data.external_links.push(link);
                 }
-                data.links.push( _url );
             });
-        };
-        this.scraper.addUrl(url);
-        this.scraper.run(function() {
             callback(null, data);
         });
+        client.on('error', function(err){
+            callback(err);
+        });
+        client.fetch();
     };
 
 }).call(Scraper.prototype);
