@@ -4,6 +4,14 @@ var ratelimiter = require('ffratelimiter')
   , Scraper = require('scrapify')
   ;
 
+module.exports = function(options, imports, register){
+    console.log("Setup Scraper module");
+    var scraper = new Scraper();
+    register(null, {
+        "scraper": scraper
+    });
+};
+
 var Scraper = function() {
     console.log("Setup Scraper module.");
     var me = this;
@@ -45,4 +53,3 @@ var Scraper = function() {
     };
 
 }).call(Scraper.prototype);
-module.exports = Scraper;

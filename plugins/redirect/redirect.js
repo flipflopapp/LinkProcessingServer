@@ -3,8 +3,15 @@ var http = require('http')
   , ratelimiter = require('ffratelimiter')
   ;
 
-var Redirect = function(){
+module.exports = function(options, imports, register){
     console.log("Setup Redirect module");
+    var redirect = new Redirect();
+    register(null, {
+        "redirect": redirect
+    });
+};
+
+var Redirect = function() {
     var me = this;
     var params = {
         limit: 10,
@@ -59,4 +66,3 @@ var Redirect = function(){
     };
 
 }).call(Redirect.prototype);
-module.exports = Redirect;

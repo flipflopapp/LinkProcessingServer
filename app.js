@@ -3,9 +3,9 @@ var architect = require("architect")
 
 var config = [
   "./plugins/server",
-  "./plugins/eventbus",
+  "./plugins/redirect",
   "./plugins/scraper",
-  "./plugins/redirect"
+  "./plugins/eventbus"
 ];
 
 var tree = architect.resolveConfig(config, __dirname);
