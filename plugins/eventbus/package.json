@@ -1,0 +1,10 @@
+{
+    "name": "eventbus",
+    "version": "0.0.1",
+    "main": "eventbus.js",
+    "private": true,
+    "plugin": {
+        "consumes": [],
+        "provides": ["eventbus"]
+    }
+}

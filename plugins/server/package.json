@@ -1,0 +1,15 @@
+{
+    "name": "server",
+    "version": "0.0.1",
+    "main": "serversetup.js",
+    "private": true,
+    "plugin": {
+        "consumes": [ "scraper", "redirect" ],
+        "provides": [ "server" ]
+    },
+    "dependencies": {
+        "express": "*",
+        "connect": "*",
+        "path": "*"
+    }
+}

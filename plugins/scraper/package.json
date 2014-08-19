@@ -1,0 +1,14 @@
+{
+    "name": "scraper",
+    "version": "0.0.1",
+    "main": "scraper.js",
+    "private": true,
+    "plugin": {
+        "consumes": [ ],
+        "provides": [ "scraper" ]
+    },
+    "dependencies": {
+        "scrapify": "*",
+        "ratelimiter": "*"
+    }
+}

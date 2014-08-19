@@ -1,0 +1,17 @@
+{
+    "name": "LinkProcessingServer",
+    "description": "A support server for REWQ.co",
+    "version": "0.0.1",
+    "author": "Naval Saini <flipflopapps@gmail.com>",
+    "dependencies": {
+        "architect": "0.1.10",
+        "express": "3.4.7",
+        "connect": "2.7.10",
+        "async": "0.2.9",
+        "underscore": "1.5.1",
+        "eventemitter": "0.3.3",
+        "mongoose-text-search": "0.0.2",
+        "request": "2.23.0",
+        "ffratelimiter": "0.1.1"
+    }
+}

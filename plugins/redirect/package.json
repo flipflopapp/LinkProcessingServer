@@ -1,0 +1,15 @@
+{
+    "name": "redirect",
+    "version": "0.0.1",
+    "main": "redirect.js",
+    "private": true,
+    "plugin": {
+        "consumes": [ ],
+        "provides": [ "redirect" ]
+    },
+    "dependencies": {
+        "http": "*",
+        "https": "*",
+        "ratelimiter": "*"
+    }
+}
