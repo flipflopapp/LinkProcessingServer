@@ -12,7 +12,13 @@ This is built as a part of REWQ.co and has following functionalities, given a UR
 Run the server
 ==============
 
-  node app.js
+Install dependencies
+
+        npm install
+
+Start the server
+
+        node app.js
 
 Configure the server
 ====================
