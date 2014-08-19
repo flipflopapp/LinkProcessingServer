@@ -1,5 +1,4 @@
-var http = require('http')
-  , https = require('https')
+var request = require('request')
   , ratelimiter = require('ffratelimiter')
   ;
 
@@ -25,43 +24,33 @@ var Redirect = function() {
 (function(){
 
     this.getOriginalURL = function(urlStr, cb){
+        var me = this;
         var params = [ urlStr ];
-        this.que.callWrapper(me._getOriginalURL, params, callback, this);
+        me.que.callWrapper(me._getOriginalURL, params, cb, me);
     };
 
     this._getOriginalURL = function(urlStr, cb){
         var me = this;
 	    var purl = require('url').parse(urlStr);
-
+	
 	    if (!purl.protocol)
-		    purl = require('url').parse("http://"+url);
+		    purl = require('url').parse("http://"+urlStr);
 	
-    	var httpModule = purl.protocol === 'https:'
-	    	? https
-		    : http;
-
+        url = require('url').format(purl);
+	
         var options = {
+            uri: url,
             method: 'HEAD',
-            uri: urlStr
+            timeout: 10000,
+            followAllRedirects: true,
+            maxRedirects: 10
         };
-	
-        var client = httpModule.request(options, function(res){
-		    res.setEncoding('utf-8');
-		
-    		res.on('end', function(){
-	    		if (res.statusCode >= 300 && res.statusCode < 400)
-		    	{
-			    	me._getOriginalURL(res.headers.location, cb);
-			    }
-			    else
-			    {
-    		    	cb(null, url);
-			    }
-            });
-	
-            client.on('error', function(err){
-		        cb(err);
-            });
+
+        request(options, function(err, res){
+            if (err) {
+                return cb(err);
+            }
+            return cb(null, res.request.uri.href );
         });
     };
 

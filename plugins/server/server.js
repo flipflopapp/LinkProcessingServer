@@ -37,20 +37,32 @@ var Server = function() {
     // Routes
 
     this.doStuff = function (req, res) {
-        var action = req.params.action;
-        var url = req.params.url;
+        var action = req.body.action;
+        var url = req.body.url;
+
+        if(!url){
+            return res.send(400, "URL must a part of query");
+        }
 
         if (!action || action == 'redirect'){
-            _self.$redirect(url, function(err, url){
+            _self.$redirect.getOriginalURL(url, function(err, _url){
                 if (err) {
                     return res.send(500, err.message);
                 }
-                res.send(200, { original: url });
+                if (url != _url) {
+                    var result = {
+                        url: url,
+                         redirectsto: _url
+                    };
+                    res.send(200, result);
+                } else {
+                    res.send(200, {});
+                }
             });
         }
 
         if (action == 'scrape'){
-            _self.$scraper(url, function(err, data){
+            _self.$scraper.getStructuredData(url, function(err, data){
                 if (err) {
                     return res.send(500, err.message);
                 }
