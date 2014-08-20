@@ -35,15 +35,24 @@ var Scraper = function() {
     this._getStructuredData = function(url, callback) {
         var me = this;
         var client = new MetaInspector(url, {});
-        var data = {
-            internal_links: [],
-            external_links: []
-        };
         client.on('fetch', function(){
+            var data = {
+                url: client.url,
+                host: client.host,
+                scheme: client.scheme,
+                title: client.title,
+                author: client.author,
+                keywords: client.keywords,
+                charset: client.charset,
+                description: client.description,
+                feeds: client.feeds,
+                internal_links: [],
+                external_links: []
+            };
             var links = client.links();
             links.forEach(function(link){
                 if (link[0] == '/'){
-                    link = client.host + '/' + link;
+                    link = client.scheme + '://' + client.host + link;
                     data.internal_links.push(link);
                 } else if (link[0] == '#') {
                     // skip - in page link

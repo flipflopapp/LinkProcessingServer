@@ -37,8 +37,8 @@ var Server = function() {
     // Routes
 
     this.doStuff = function (req, res) {
-        var action = req.body.action;
-        var url = req.body.url;
+        var action = req.body.a;
+        var url = req.body.u;
 
         if(!url){
             return res.send(400, "URL must a part of query");
