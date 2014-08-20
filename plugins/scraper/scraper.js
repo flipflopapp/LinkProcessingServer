@@ -52,12 +52,16 @@ var Scraper = function() {
             var links = client.links();
             links.forEach(function(link){
                 if (link[0] == '/'){
-                    link = client.scheme + '://' + client.host + link;
+                    link = client.rootUrl + link;
                     data.internal_links.push(link);
                 } else if (link[0] == '#') {
                     // skip - in page link
                 } else {
-                    data.external_links.push(link);
+                    if(!link.match(client.host)){
+                      data.external_links.push(link);
+                    }else{
+                      data.internal_links.push(link);
+                    }
                 }
             });
             callback(null, data);
