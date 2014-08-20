@@ -40,6 +40,8 @@ var Server = function() {
         var action = req.body.a;
         var url = req.body.u;
 
+        res.header("Cache-Control", "no-cache, no-store, must-revalidate");
+        
         if(!url){
             return res.send(400, "URL must a part of query");
         }
@@ -54,9 +56,9 @@ var Server = function() {
                         url: url,
                          redirectsto: _url
                     };
-                    res.send(200, result);
+                    res.send(result);
                 } else {
-                    res.send(200, {});
+                    res.send({});
                 }
             });
         }
@@ -66,7 +68,7 @@ var Server = function() {
                 if (err) {
                     return res.send(500, err.message);
                 }
-                res.send(200, data);
+                res.send(data);
             });
         }
     };

@@ -1,7 +1,7 @@
 'use strict';
 
 var ratelimiter = require('ffratelimiter')
-  , MetaInspector = require('node-metainspector')
+  , MetaInspector = require('./node-metainspector-modified')
   ;
 
 module.exports = function(options, imports, register){
@@ -34,37 +34,39 @@ var Scraper = function() {
 
     this._getStructuredData = function(url, callback) {
         var me = this;
-        var client = new MetaInspector(url, {});
+        var client = new (MetaInspector())(url, {});
         client.on('fetch', function(){
-            var data = {
+            var _data = {
                 url: client.url,
                 host: client.host,
                 scheme: client.scheme,
-                title: client.title,
-                author: client.author,
-                keywords: client.keywords,
-                charset: client.charset,
-                description: client.description,
-                feeds: client.feeds,
+                title: client.ogTitle() || client.title(),
+                author: client.author(),
+                keywords: client.keywords(),
+                charset: client.charset(),
+                description: client.description(),
+                feeds: client.feeds(),
                 internal_links: [],
                 external_links: []
             };
             var links = client.links();
             links.forEach(function(link){
-                if (link[0] == '/'){
-                    link = client.rootUrl + link;
-                    data.internal_links.push(link);
-                } else if (link[0] == '#') {
-                    // skip - in page link
-                } else {
-                    if(!link.match(client.host)){
-                      data.external_links.push(link);
-                    }else{
-                      data.internal_links.push(link);
+                if(link){
+                    if (link[0] == '/'){
+                        link = client.rootUrl + link;
+                        _data.internal_links.push(link);
+                    } else if (link[0] == '#') {
+                        // skip - in page link
+                    } else {
+                        if(!link.match(client.host)){
+                          _data.external_links.push(link);
+                        }else{
+                          _data.internal_links.push(link);
+                        }
                     }
                 }
             });
-            callback(null, data);
+            callback(null, _data);
         });
         client.on('error', function(err){
             callback(err);
