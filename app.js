@@ -1,4 +1,5 @@
 var architect = require("architect")
+  , mongoose = require('mongoose')
   ;
 
 var config = [

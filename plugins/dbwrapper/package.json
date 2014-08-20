@@ -1,0 +1,12 @@
+{
+    "name": "dbwrapper",
+    "version": "0.0.1",
+    "main": "dbwrapper.js",
+    "private": true,
+    "plugin": {
+        "consumes": [ ],
+        "provides": [ "db" ]
+    },
+    "dependencies": {
+    }
+}

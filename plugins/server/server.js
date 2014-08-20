@@ -16,6 +16,7 @@ var Server = function() {
         _self.$app = serverOptions.app;
         _self.$scraper = serverOptions.scraper;
         _self.$redirect = serverOptions.redirect;
+        _self.$db = serverOptions.db;
 
         // setup APIs
         var app = _self.$app;

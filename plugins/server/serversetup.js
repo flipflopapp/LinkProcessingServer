@@ -6,7 +6,7 @@ var connect = require('connect')
   , path = require('path')
   ;
 
-var Server = require("./server")
+var Server = require('./server')
   ;
 
 // called by architect
@@ -43,6 +43,7 @@ module.exports = function setup(options, imports, register) {
         app: app
       , scraper: imports.scraper
       , redirect: imports.redirect
+      , db: imports.db
     };
     var server = new Server();
     server.init (serverOptions);
