@@ -42,12 +42,16 @@ var Server = function() {
         var url = req.body.u;
 
         res.header("Cache-Control", "no-cache, no-store, must-revalidate");
-        
-        if(!url){
-            return res.send(400, "URL must a part of query");
+
+        if(!action){
+            return res.send(400, "action(a) must be a part of the query.");
         }
 
-        if (!action || action == 'redirect'){
+        if(!url){
+            return res.send(400, "URL(u) must a part of query");
+        }
+
+        if (action === 'redirect'){
             _self.$redirect.getOriginalURL(url, function(err, _url){
                 if (err) {
                     return res.send(500, err.message);
@@ -64,10 +68,19 @@ var Server = function() {
             });
         }
 
-        if (action == 'scrape'){
+        if (action === 'scrape'){
             _self.$scraper.getStructuredData(url, function(err, data){
                 if (err) {
                     return res.send(500, err.message);
+                }
+                res.send(data);
+            });
+        }
+
+        if (action === 'html'){
+            _self.$scraper.getLinksFromHtml(text, function(err, data){
+                if (err) {
+                    return res.send(t00, err.message);
                 }
                 res.send(data);
             });

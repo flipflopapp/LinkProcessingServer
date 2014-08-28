@@ -33,18 +33,25 @@ module.exports = function() {
   	return URI.parse(url).scheme ? url : "http://" + url;
   }
   
-  var MetaInspector = function(url){
-  	this.url = URI.normalize(withDefaultScheme(url));
-  	_my = {};
-  
-  	this.parsedUrl = URI.parse(this.url);
-  	this.scheme = this.parsedUrl.scheme;
-  	this.host = this.parsedUrl.host;
-  	this.rootUrl = this.scheme + "://" + this.host;
+  var MetaInspector = function(url, body){
+    _my = {};
+    if(url){
+    	this.url = URI.normalize(withDefaultScheme(url));
+    	this.parsedUrl = URI.parse(this.url);
+    	this.scheme = this.parsedUrl.scheme;
+    	this.host = this.parsedUrl.host;
+    	this.rootUrl = this.scheme + "://" + this.host;
+    } else {
+        this.body = body;
+        this.parsedUrl = '';
+    	this.scheme = '';
+    	this.host = '';
+    	this.rootUrl = '';
+    }
   };
-  
+ 
   MetaInspector.prototype = new events.EventEmitter();
-  
+
   function getTitle()
   {
   	debug("Parsing page title");
@@ -261,7 +268,9 @@ module.exports = function() {
   
   MetaInspector.prototype.fetch = function(){
   	var self = this;
-  
+    if(!self.url){
+  		return self.emit("error", new Error('function not available'));
+    }
   	request({uri : this.url}, function(error, response, body){
   		if(!error && response.statusCode === 200){
   			self.document = body;
@@ -276,6 +285,19 @@ module.exports = function() {
   			self.emit("error", error);
   		}
   	});
+  };
+
+  // Additional function added for LinkProcessingServer
+
+  MetaInspector.prototype.parse = function(){
+  	var self = this;
+    if(!self.body){
+  		return self.emit("error", new Error('function not available'));
+    }
+    self.document = text;
+    self.parsedDocument = cheerio.load(body);
+    initAllProperties.apply(self);
+  	self.emit("fetch");
   };
   
   return MetaInspector;

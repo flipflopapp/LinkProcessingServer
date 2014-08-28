@@ -74,4 +74,25 @@ var Scraper = function() {
         client.fetch();
     };
 
+    this.getLinksFromHtml = function(html, callback){
+        var me = this;
+        var client = new (MetaInspector())(null, html);
+        client.on('fetch', function(){
+            var _data = {
+                title: client.ogTitle() || client.title(),
+                author: client.author(),
+                keywords: client.keywords(),
+                charset: client.charset(),
+                description: client.description(),
+                feeds: client.feeds(),
+                links: client.links()
+            };
+            callback(null, _data);
+        });
+        client.on('error', function(err){
+            callback(err);
+        });
+        client.parse();
+    };
+
 }).call(Scraper.prototype);
