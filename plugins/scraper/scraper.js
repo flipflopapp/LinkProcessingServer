@@ -49,6 +49,16 @@ var Scraper = function() {
                 internal_links: [],
                 external_links: []
             };
+
+            var host;
+            var hostArr = _data.host.split(".");
+            if(hostArr.length > 1){
+                var len = hostArr.length;
+                host = new RegExp(hostArr[len-2] + "." + hostArr[len-1] + "$");
+            }else{
+                host = new RegExp(_data.host + "$");
+            }
+
             var links = client.links();
             links.forEach(function(link){
                 if(link){
@@ -58,7 +68,9 @@ var Scraper = function() {
                     } else if (link[0] == '#') {
                         // skip - in page link
                     } else {
-                        if(!link.match(client.host)){
+                        var linkurl = require('url').parse(link);
+                        var linkhost = linkurl.hostname;
+                        if(!linkhost.match(host)){
                           _data.external_links.push(link);
                         }else{
                           _data.internal_links.push(link);
