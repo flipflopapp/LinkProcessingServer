@@ -4,7 +4,7 @@ var architect = require("architect")
 
 var config = [
   "./plugins/server",
-  "./plugins/redirect",
+  "./plugins/resolveurl",
   "./plugins/scraper",
   "./plugins/eventbus"
 ];

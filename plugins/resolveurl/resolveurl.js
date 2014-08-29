@@ -3,14 +3,14 @@ var request = require('request')
   ;
 
 module.exports = function(options, imports, register){
-    console.log("Setup Redirect module");
-    var redirect = new Redirect();
+    console.log("Setup Resolve module");
+    var resolve = new Resolve();
     register(null, {
-        "redirect": redirect
+        "resolveurl": resolve
     });
 };
 
-var Redirect = function() {
+var Resolve = function() {
     var me = this;
     var params = {
         limit: 10,
@@ -42,8 +42,8 @@ var Redirect = function() {
             uri: url,
             method: 'HEAD',
             timeout: 10000,
-            followAllRedirects: true,
-            maxRedirects: 10
+            followAllResolves: true,
+            maxResolves: 10
         };
 
         request(options, function(err, res){
@@ -54,4 +54,4 @@ var Redirect = function() {
         });
     };
 
-}).call(Redirect.prototype);
+}).call(Resolve.prototype);

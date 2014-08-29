@@ -42,7 +42,7 @@ module.exports = function setup(options, imports, register) {
     var serverOptions = {
         app: app
       , scraper: imports.scraper
-      , redirect: imports.redirect
+      , resolveurl: imports.resolveurl
       , db: imports.db
     };
     var server = new Server();

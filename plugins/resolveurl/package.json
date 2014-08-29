@@ -1,11 +1,11 @@
 {
-    "name": "redirect",
+    "name": "resolveurl",
     "version": "0.0.1",
-    "main": "redirect.js",
+    "main": "resolveurl.js",
     "private": true,
     "plugin": {
         "consumes": [ ],
-        "provides": [ "redirect" ]
+        "provides": [ "resolveurl" ]
     },
     "dependencies": {
         "http": "*",

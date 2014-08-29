@@ -4,7 +4,7 @@
     "main": "serversetup.js",
     "private": true,
     "plugin": {
-        "consumes": [ "scraper", "redirect", "eventbus" ],
+        "consumes": [ "scraper", "resolveurl", "eventbus" ],
         "provides": [ "server" ]
     },
     "dependencies": {

@@ -15,7 +15,7 @@ var Server = function() {
     this.init = function (serverOptions) {
         _self.$app = serverOptions.app;
         _self.$scraper = serverOptions.scraper;
-        _self.$redirect = serverOptions.redirect;
+        _self.$resolveurl = serverOptions.resolveurl;
         _self.$db = serverOptions.db;
 
         // setup APIs
@@ -51,15 +51,15 @@ var Server = function() {
             return res.send(400, "URL(u) must a part of query");
         }
 
-        if (action === 'redirect'){
-            _self.$redirect.getOriginalURL(url, function(err, _url){
+        if (action === 'resolveurl'){
+            _self.$resolveurl.getOriginalURL(url, function(err, _url){
                 if (err) {
                     return res.send(500, err.message);
                 }
                 if (url != _url) {
                     var result = {
                         url: url,
-                         redirectsto: _url
+                        resolve: _url
                     };
                     res.send(result);
                 } else {
