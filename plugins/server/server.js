@@ -80,7 +80,7 @@ var Server = function() {
         if (action === 'html'){
             _self.$scraper.getLinksFromHtml(text, function(err, data){
                 if (err) {
-                    return res.send(t00, err.message);
+                    return res.send(500, err.message);
                 }
                 res.send(data);
             });
