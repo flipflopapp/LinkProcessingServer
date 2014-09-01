@@ -71,10 +71,14 @@ var Scraper = function() {
                     } else {
                         var linkurl = require('url').parse(link);
                         var linkhost = linkurl.hostname;
-                        if(!linkhost.match(host)){
-                          _data.external_links.push(link);
+                        if(linkhost){
+                          if(!linkhost.match(host)){
+                            _data.external_links.push(link);
+                          }else{
+                            _data.internal_links.push(link);
+                          }
                         }else{
-                          _data.internal_links.push(link);
+                          console.log('Warning! Url ' + linkurl + ' is getting skipped.');
                         }
                     }
                 }
