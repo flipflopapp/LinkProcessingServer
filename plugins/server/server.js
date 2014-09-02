@@ -73,7 +73,7 @@ var Server = function() {
                 if (err) {
                     return res.send(500, err.message);
                 }
-                res.send(data);
+                res.send( escape(JSON.stringify(data)) );
             });
         }
 
@@ -82,7 +82,7 @@ var Server = function() {
                 if (err) {
                     return res.send(500, err.message);
                 }
-                res.send(data);
+                res.send( escape(JSON.stringify(data)) );
             });
         }
     };

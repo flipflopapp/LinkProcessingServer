@@ -73,12 +73,16 @@ var Scraper = function() {
                         var linkhost = linkurl.hostname;
                         if(linkhost){
                           if(!linkhost.match(host)){
-                            _data.external_links.push(link);
+                            if(_data.external_links.indexOf(link) < 0){
+                              _data.external_links.push(link);
+                            }
                           }else{
-                            _data.internal_links.push(link);
+                            if(_data.internal_links.indexOf(link) < 0){
+                              _data.internal_links.push(link);
+                            }
                           }
                         }else{
-                          console.log('Warning! Url ' + linkurl + ' is getting skipped.');
+                          console.log('Warning! Url ' + link + ' is getting skipped.');
                         }
                     }
                 }
