@@ -41,29 +41,27 @@ var Server = function() {
         var action = req.body.a;
         var url = req.body.u;
 
-        res.header("Cache-Control", "no-cache, no-store, must-revalidate");
-
         if(!action){
-            return res.send(400, "action(a) must be a part of the query.");
+            return res.json(400, "action(a) must be a part of the query.");
         }
 
         if(!url){
-            return res.send(400, "URL(u) must a part of query");
+            return res.json(400, "URL(u) must a part of query");
         }
 
         if (action === 'resolveurl'){
             _self.$resolveurl.getOriginalURL(url, function(err, _url){
                 if (err) {
-                    return res.send(500, err.message);
+                    return res.json(500, err.message);
                 }
                 if (url != _url) {
                     var result = {
                         url: url,
                         resolve: _url
                     };
-                    res.send(result);
+                    res.json( { data: result } );
                 } else {
-                    res.send({});
+                    res.json( { data: {} } );
                 }
             });
         }
@@ -71,18 +69,18 @@ var Server = function() {
         if (action === 'scrape'){
             _self.$scraper.getStructuredData(url, function(err, data){
                 if (err) {
-                    return res.send(500, err.message);
+                    return res.json(500, err.message);
                 }
-                res.send( escape(JSON.stringify(data)) );
+                res.json( { data: data } );
             });
         }
 
         if (action === 'html'){
             _self.$scraper.getLinksFromHtml(text, function(err, data){
                 if (err) {
-                    return res.send(500, err.message);
+                    return res.json(500, err.message);
                 }
-                res.send( escape(JSON.stringify(data)) );
+                res.json( { data: data } );
             });
         }
     };

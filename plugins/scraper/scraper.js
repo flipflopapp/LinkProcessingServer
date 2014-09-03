@@ -47,7 +47,7 @@ var Scraper = function() {
                 description: client.description(),
                 feeds: client.feeds(),
                 internal_links: [],
-                external_links: [],
+                external_links: []
                 fulltext: client.document
             };
 
