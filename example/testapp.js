@@ -16,10 +16,17 @@ linkServer.getFinalLink('t.co/0OgRtGlQUp',
   function(err, data){
     if(err){
       console.log(err);
-    }else{
-      console.log(data);
+      return process.exit(-1);
     }
-    process.exit(0);
+    linkServer.getLinkDetails(data.resolve,
+      function(err, data){
+        if(err){
+          console.log(err);
+          return process.exit(-1);
+        }
+        console.log(data);
+      }
+    );
   }
 );
 
