@@ -1,6 +1,5 @@
 'use strict';
 
-var DEBUG = true;
 var kue = require('kue');
 
 module.exports = function setup(options, imports, register) {
@@ -16,6 +15,7 @@ module.exports = function setup(options, imports, register) {
 };
 
 var Server = function(options, imports){
+    this.DEBUG = options.DEBUG,
     this.$scraper = imports.scraper;
     this.$resolveurl = imports.resolveurl;
     this.$db = imports.db;
@@ -47,12 +47,11 @@ var Server = function(options, imports){
     };
 
     this.doResolveUrl = function (data, done) {
-      DEBUG && console.log("doResolveUrl: " + data.u);
+      this.DEBUG && console.log("doResolveUrl: " + data.u);
       var url = data.u;
       if(!url){
         return done(new Error("Url required."));
       }
-
       this.$resolveurl.getOriginalURL(url, function(err, _url){
         if (err) {
           return done(new Error(err.message));
@@ -62,7 +61,6 @@ var Server = function(options, imports){
             url: url,
             resolve: _url
           };
-          console.log( _url );
           done(null, result);
         } else {
           done();
@@ -71,7 +69,7 @@ var Server = function(options, imports){
     };
 
     this.doScrapeUrl = function (data, done) {
-      DEBUG && console.log("doScrapeUrl: " + data.u);
+      this.DEBUG && console.log("doScrapeUrl: " + data.u);
       var url = data.u;
       if(!url){
         return done(new Error("Url required."));
@@ -80,12 +78,11 @@ var Server = function(options, imports){
     };
 
     this.doScrapeHtml = function (data, done) {
-      DEBUG && console.log("doScrapeHtml: " + data.u);
+      this.DEBUG && console.log("doScrapeHtml: " + data.u);
       var url = data.u;
       if(!url){
         return done(new Error("Url required."));
       }
-
       this.$scraper.getLinksFromHtml(text, done);
     };
 
