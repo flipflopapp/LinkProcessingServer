@@ -2,8 +2,18 @@ var architect = require("architect")
   , mongoose = require('mongoose')
   ;
 
+var redis = {
+  host: '127.0.0.1',
+  port: 6379,
+  username: '',
+  password: ''
+};
+
 var config = [
-  "./plugins/server",
+  {
+    packagePath: "./plugins/server",
+    redis: redis
+  },
   "./plugins/resolveurl",
   "./plugins/scraper",
   "./plugins/eventbus"

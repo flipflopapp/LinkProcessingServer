@@ -8,24 +8,39 @@ This is built as a part of REWQ.co and has following functionalities, given a UR
 1. Scrape links
 2. Find the original URL (given redirects)
 
+The server accepts above jobs on kue (a priority queue backed by redis https://github.com/learnboost/kue).
+
+
+External Dependencies
+=====================
+
+Needs a Redis server on localhost.
 
 Run the server
 ==============
 
 Install dependencies
 
-        npm install
+        $ npm install
 
 Start the server
 
-        node app.js
+        $ node app.js
 
 Configure the server
 ====================
 
-Configure the port - update in app.js.
-By default, the server runs on port 5000.
+Configure the redis port - update in app.js.
+The default host:port is 127.0.0.1:6379
 
+Running the examples
+====================
+
+You can learn how to use this code by quickly looking at the examples.
+
+To run an example,
+
+        $ node example/testapp.js
 
 Architecture
 ============
